@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
             if (!isTargetDefined || interval < 0f)
             {
                 var target = UnityEngine.Random.Range(0, childCount + 1);
-                Debug.Log("Next destination is " + target);
+                // Debug.Log("Next destination is " + target);
                 if (target < childCount)
                 {
                     targetPosition = motherNeutral.transform.GetChild(target).transform.position;
@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
             interval -= Time.deltaTime;
             if (transform.position.y < 0f)
             {
-                transform.position = new Vector3(UnityEngine.Random.Range(-4, 4), 5, UnityEngine.Random.Range(-4, 4));
+                transform.position = new Vector3(UnityEngine.Random.Range(-10, 10), 3, UnityEngine.Random.Range(-10, 10));
             }
         }
     }

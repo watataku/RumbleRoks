@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Judgement : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class Judgement : MonoBehaviour
         {
             if (isStart) Judge();
             isStart = false;
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("Main");
+            }
         }
 
         var second = (int) timer;
@@ -68,15 +73,15 @@ public class Judgement : MonoBehaviour
     {
         if (pScore > eScore)
         {
-            gameText.text = "You Win!";
+            gameText.text = "You Win! Press R to Restart!";
         }
         else if (pScore < eScore)
         {
-            gameText.text = "You Lose!";
+            gameText.text = "You Lose! Press R to Restart!";
         }
         else
         {
-            gameText.text = "Draw!";
+            gameText.text = "Draw! Press R to Restart!";
         }
     }
     

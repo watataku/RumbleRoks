@@ -6,11 +6,12 @@ public class NeutralController : MonoBehaviour
 {
     public int currentIndex;    // 敵　中立　味方
     [SerializeField] private Material[] materials = new Material[3];
-    
+
     private bool isColored;
+    private bool isFar;
     [SerializeField] private float velocity;
     private Rigidbody rigidbody;
-    private float time;
+    private float resetTime;
     private float changedInterval;
 
     // Start is called before the first frame update
@@ -22,16 +23,24 @@ public class NeutralController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        rigidbody.AddForce(transform.forward * velocity);
-        if(changedInterval > 0f) changedInterval -= Time.deltaTime;
-        time -= Time.deltaTime;
-        if (time <= 0) ResetColor();
-
-        if (transform.position.y < 0f)
+    {
+        if (Judgement.isStart)
         {
-            transform.position = new Vector3(Random.Range(-4, 4), 5, Random.Range(-4, 4));
+            if (Vector3.Distance(transform.position, Vector3.zero) < 3.0f)
+            {
+                rigidbody.AddForce(new Vector3(Random.Range(-5, 5), 0, Random.Range(-5,5)), ForceMode.Impulse);
+            }
+                    
+            if(changedInterval > 0f) changedInterval -= Time.deltaTime;
+            resetTime -= Time.deltaTime;
+            if (resetTime <= 0) ResetColor();
+            
+            if (transform.position.y < 0f)
+            {
+                transform.position = new Vector3(Random.Range(-10, 10), 3, Random.Range(-10, 10));
+            }
         }
+        
     }
 
     public void UpdateColor(int add)
@@ -42,7 +51,7 @@ public class NeutralController : MonoBehaviour
             gameObject.GetComponent<Renderer>().material = materials[currentIndex];
             isColored = true;
             changedInterval = 5f;
-            time = 30f;
+            resetTime = 30f;
         }
     }
 
@@ -51,6 +60,6 @@ public class NeutralController : MonoBehaviour
         currentIndex = 1;
         gameObject.GetComponent<Renderer>().material = materials[currentIndex];
         isColored = false;
-        time = 30f;
+        resetTime = 30f;
     }
 }
